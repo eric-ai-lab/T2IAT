@@ -32,7 +32,7 @@ pip3 install gradio  # only used for demo
 
 ```
 @inproceedings{wang-etal-2022-assessing,
-    title = "Assessing Multilingual Fairness in Pre-trained Multimodal Representations",
+    title = "T2IAT: Measuring Valence and Stereotypical Biases in Text-to-Image Generation",
     author = "Wang, Jialu  and
       Liu, Xinyue Gabby  and
       Di, Zonglin  and

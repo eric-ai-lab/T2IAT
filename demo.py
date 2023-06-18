@@ -18,13 +18,13 @@ def generate_image(text_prompt):
     images = pipe(text_prompt, num_images_per_prompt=10).images
     return images
 
-def build_generation_block():
+def build_generation_block(prompt):
     with gr.Row(variant="compact"):
         text = gr.Textbox(
-            label="Enter your prompt",
+            label=prompt,
             show_label=False,
             max_lines=1,
-            placeholder="Enter your prompt",
+            placeholder=prompt,
         ).style(
             container=False,
         )
@@ -78,7 +78,6 @@ with gr.Blocks() as demo:
         gr.HTML("""
         <div>
         <p style="padding: 25px 200px; text-align: justify;">
-            <img src='file/images/Text2ImgAssocationTest.png' width="200" style="float: right;"/>
             <strong>Abstract:</strong> In the last few years, text-to-image generative models have gained remarkable success in generating images with unprecedented quality accompanied by a breakthrough of inference speed. Despite their rapid progress, human biases that manifest in the training examples, particularly with regard to common stereotypical biases, like gender and skin tone, still have been found in these generative models. In this work, we seek to measure more complex human biases exist in the task of text-to-image generations. Inspired by the well-known Implicit Association Test (IAT) from social psychology, we propose a novel Text-to-Image Association Test (T2IAT) framework that quantifies the implicit stereotypes between concepts and valence, and those in the images. We replicate the previously documented bias tests on generative models, including morally neutral tests on flowers and insects as well as demographic stereotypical tests on diverse social attributes. The results of these experiments demonstrate the presence of complex stereotypical behaviors in image generations. 
         </p>
         </div>
@@ -95,14 +94,14 @@ with gr.Blocks() as demo:
         gr.HTML("""
             <h3>First step: generate images with neutral prompts</h3>
         """)
-        text_null, gallery_null = build_generation_block()
+        text_null, gallery_null = build_generation_block("Enter the neutral prompt.")
     
     with gr.Group():
         gr.HTML("""
             <h3>Second step: generate attribute-guided images by including the attributes into the prompts</h3> 
         """)
-        text_pos, gallery_pos = build_generation_block()
-        text_neg, gallery_neg = build_generation_block()
+        text_pos, gallery_pos = build_generation_block("Enter your prompt with attribute A.")
+        text_neg, gallery_neg = build_generation_block("Enter your prompt with attribute B.")
 
     with gr.Group():
         gr.HTML("<h3>Final step: compute the association score between your specified attributes!")
@@ -112,7 +111,7 @@ with gr.Blocks() as demo:
             btn = gr.Button("Compute Association Score!")
             btn.click(compute_association_score, [gallery_null, gallery_pos, gallery_neg], score)
         
-        gr.HTML("<p>The absolute value of the association score represents the strength of the bias between the compared attributes subject to the concepts in image generation.</p>")
+        gr.HTML("<p>The absolute value of the association score represents the strength of the bias between the compared attributes, A and B, subject to the concepts that users choose in image generation. The higher score, the stronger the association, and vice versa.</p>")
 
 if __name__ == "__main__":
     demo.queue(concurrency_count=3)
