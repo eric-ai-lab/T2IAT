@@ -1,4 +1,4 @@
-# README
+# Text-to-Image Association Test (T2IAT)
 
 This is the code implementation for Text-to-Image Association Test (T2IAT). ![An example bias test instantiated on Gender-Science. The text prompt ``A photo of a child studying astronomy'' is constructed to generate neutral images. Then the gender-neutral word ``child'' is replaced with gendered words to generate attribute-specific images. We calculate the average difference in the distance between the neutral and attribute-specific images as a measure of association.](images/Text2ImgAssocationTest.png)
 
